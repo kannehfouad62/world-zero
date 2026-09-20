@@ -33,3 +33,12 @@ client/unity/UserSettings/
 
 # TypeScript build cache
 *.tsbuildinfo
+
+# Unity generated folders anywhere under the Unity project
+client/unity/**/Library/
+client/unity/**/Temp/
+client/unity/**/Obj/
+client/unity/**/Logs/
+client/unity/**/UserSettings/
+client/unity/**/Build/
+client/unity/**/Builds/
