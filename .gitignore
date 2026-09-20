@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+dist/
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# Unity generated directories
+client/unity/Library/
+client/unity/Temp/
+client/unity/Obj/
+client/unity/Build/
+client/unity/Builds/
+client/unity/Logs/
+client/unity/UserSettings/
+
+# Misc
+*.swp
+
+# TypeScript build cache
+*.tsbuildinfo
