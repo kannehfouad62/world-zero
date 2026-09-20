@@ -175,3 +175,74 @@ export const playerWorldPresences = pgTable('player_world_presences', {
     .notNull()
     .defaultNow(),
 });
+
+export const accountStatusEnum = pgEnum('account_status', [
+  'ACTIVE',
+  'LOCKED',
+  'DISABLED',
+]);
+
+export const accounts = pgTable('accounts', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  playerId: uuid('player_id')
+    .notNull()
+    .unique()
+    .references(() => players.id, {
+      onDelete: 'cascade',
+    }),
+
+  email: text('email').notNull().unique(),
+
+  passwordHash: text('password_hash').notNull(),
+
+  status: accountStatusEnum('status').notNull().default('ACTIVE'),
+
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp('updated_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  lastLoginAt: timestamp('last_login_at', {
+    withTimezone: true,
+  }),
+});
+
+export const authSessions = pgTable('auth_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id, {
+      onDelete: 'cascade',
+    }),
+
+  refreshTokenHash: text('refresh_token_hash').notNull().unique(),
+
+  expiresAt: timestamp('expires_at', {
+    withTimezone: true,
+  }).notNull(),
+
+  revokedAt: timestamp('revoked_at', {
+    withTimezone: true,
+  }),
+
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  lastUsedAt: timestamp('last_used_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});

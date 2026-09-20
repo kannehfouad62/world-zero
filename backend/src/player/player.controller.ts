@@ -1,10 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PlayerService } from './player.service.js';
-import type {
-  CreatePlayerInput,
-  PlayerResponse,
-  UpdatePlayerPositionInput,
-} from './player.types.js';
+import type { CreatePlayerInput, PlayerResponse } from './player.types.js';
 
 @Controller('api/v1/players')
 export class PlayerController {
@@ -22,12 +18,5 @@ export class PlayerController {
     @Param('playerId') playerId: string,
   ): Promise<PlayerResponse> {
     return this.playerService.getPlayer(playerId);
-  }
-  @Patch(':playerId/position')
-  async updatePosition(
-    @Param('playerId') playerId: string,
-    @Body() input: UpdatePlayerPositionInput,
-  ): Promise<PlayerResponse> {
-    return this.playerService.updatePosition(playerId, input);
   }
 }
