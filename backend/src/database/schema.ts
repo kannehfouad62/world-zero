@@ -98,3 +98,80 @@ export const districts = pgTable('districts', {
     .notNull()
     .defaultNow(),
 });
+
+export const playerStatusEnum = pgEnum('player_status', [
+  'ACTIVE',
+  'SUSPENDED',
+  'DEACTIVATED',
+]);
+
+export const players = pgTable('players', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  username: text('username').notNull().unique(),
+
+  displayName: text('display_name').notNull(),
+
+  status: playerStatusEnum('status').notNull().default('ACTIVE'),
+
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp('updated_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  lastSeenAt: timestamp('last_seen_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const playerWorldPresences = pgTable('player_world_presences', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  playerId: uuid('player_id')
+    .notNull()
+    .unique()
+    .references(() => players.id, {
+      onDelete: 'cascade',
+    }),
+
+  districtId: uuid('district_id')
+    .notNull()
+    .references(() => districts.id, {
+      onDelete: 'restrict',
+    }),
+
+  positionX: text('position_x').notNull().default('0'),
+
+  positionY: text('position_y').notNull().default('0'),
+
+  positionZ: text('position_z').notNull().default('0'),
+
+  rotationY: text('rotation_y').notNull().default('0'),
+
+  version: bigint('version', {
+    mode: 'number',
+  })
+    .notNull()
+    .default(1),
+
+  enteredAt: timestamp('entered_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp('updated_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});

@@ -1,0 +1,3 @@
+export const MAX_MOVEMENT_DISTANCE_PER_UPDATE = 25;
+
+export const WORLD_POSITION_LIMIT = 100_000;
