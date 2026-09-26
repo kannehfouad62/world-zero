@@ -1866,6 +1866,10 @@ GameObject:
   - component: {fileID: 771269456}
   - component: {fileID: 771269455}
   - component: {fileID: 771269457}
+  - component: {fileID: 771269460}
+  - component: {fileID: 771269459}
+  - component: {fileID: 771269458}
+  - component: {fileID: 771269461}
   m_Layer: 0
   m_Name: WORLD ZERO Systems
   m_TagString: Untagged
@@ -1912,6 +1916,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94dbbdf6996b04a8d9cdf330cd2e0caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.WorldApiClient
+--- !u!114 &771269458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714e9c17fc58344d2b27ccbd4ac33c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.UI.DevelopmentLoginUI
+--- !u!114 &771269459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a78577bc9073408e9d44d19a4f61575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.AuthApiClient
+--- !u!114 &771269460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b13552940c664d0ca0a2b27acb51532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.SessionManager
+--- !u!114 &771269461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d059c8cf78f4faba2c38ec66c013e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.PlayerApiClient
 --- !u!21 &773503940
 Material:
   serializedVersion: 8
@@ -2557,6 +2609,7 @@ GameObject:
   - component: {fileID: 886238519}
   - component: {fileID: 886238518}
   - component: {fileID: 886238517}
+  - component: {fileID: 886238521}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2676,6 +2729,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886238515}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &886238521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886238515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3faea4b0c276d455bb6a003ae74725cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Player.PlayerSessionController
+  playerApiClient: {fileID: 771269461}
+  synchronizationInterval: 2
+  minimumMovementDistance: 0.25
 --- !u!21 &965961189
 Material:
   serializedVersion: 8
