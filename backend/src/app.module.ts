@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module.js';
 import { PlayerModule } from './player/player.module.js';
 import { WorldModule } from './world/world.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { NpcModule } from './npc/npc.module.js';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/auth.module.js';
     WorldModule,
     PlayerModule,
     AuthModule,
+    NpcModule,
   ],
   controllers: [AppController],
   providers: [AppService],
