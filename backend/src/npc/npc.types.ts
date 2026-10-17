@@ -55,3 +55,12 @@ export interface MayaInteractionResponse {
     occurredAt: string;
   };
 }
+
+export interface MayaDecisionStatusResponse {
+  eventId: string;
+  eventSlug: string;
+  eventStatus: 'AVAILABLE' | 'RESOLVED' | 'CANCELLED';
+  hasDecided: boolean;
+  decision: MayaHelpDecision | null;
+  decidedAt: string | null;
+}

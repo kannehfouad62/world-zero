@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using WorldZero.Networking;
 
@@ -9,56 +11,92 @@ namespace WorldZero.NPC
         [SerializeField]
         private NpcApiClient npcApiClient;
 
+        [SerializeField]
+        private string districtSlug = "district-01";
+
+        [SerializeField]
+        private float retryIntervalSeconds = 5f;
+
+        private readonly Dictionary<string, GameObject> spawnedNpcs =
+            new Dictionary<string, GameObject>();
+
         private readonly Color npcColor =
             new Color(0.92f, 0.62f, 0.25f);
 
         private IEnumerator Start()
         {
+            Debug.Log("WORLD ZERO NPC Spawner initialized.");
+
+            if (npcApiClient == null)
+            {
+                npcApiClient = GetComponent<NpcApiClient>();
+            }
+
             if (npcApiClient == null)
             {
                 Debug.LogError(
-                    "NpcWorldSpawner requires NpcApiClient."
+                    "NPC Spawner: NpcApiClient is missing."
+                );
+                yield break;
+            }
+
+            while (true)
+            {
+                bool loaded = false;
+
+                yield return npcApiClient.GetDistrictNpcs(
+                    districtSlug,
+                    response =>
+                    {
+                        if (response == null)
+                        {
+                            return;
+                        }
+
+                        foreach (NpcResponse npc in response)
+                        {
+                            if (npc == null ||
+                                string.IsNullOrEmpty(npc.id) ||
+                                npc.position == null)
+                            {
+                                continue;
+                            }
+
+                            if (!spawnedNpcs.ContainsKey(npc.id))
+                            {
+                                SpawnNpc(npc);
+                            }
+                        }
+
+                        loaded = true;
+
+                        Debug.Log(
+                            $"WORLD ZERO NPCs loaded: {response.Length}"
+                        );
+                    },
+                    error =>
+                    {
+                        Debug.LogWarning(
+                            "NPC Spawner request failed: " + error
+                        );
+                    }
                 );
 
-                yield break;
+                if (loaded)
+                {
+                    yield break;
+                }
+
+                yield return new WaitForSecondsRealtime(
+                    Mathf.Max(1f, retryIntervalSeconds)
+                );
             }
-
-            NpcResponse[] npcs = null;
-            string failure = null;
-
-            yield return npcApiClient.GetDistrictNpcs(
-                "district-01",
-                response => npcs = response,
-                error => failure = error
-            );
-
-            if (!string.IsNullOrWhiteSpace(failure))
-            {
-                Debug.LogError(failure);
-                yield break;
-            }
-
-            if (npcs == null)
-            {
-                yield break;
-            }
-
-            foreach (NpcResponse npc in npcs)
-            {
-                SpawnNpc(npc);
-            }
-
-            Debug.Log(
-                $"Loaded {npcs.Length} NPC(s) into District 01."
-            );
         }
 
         private void SpawnNpc(NpcResponse npc)
         {
             GameObject npcObject =
-                GameObject.CreatePrimitive(
-                    PrimitiveType.Capsule
-                );
+                GameObject.CreatePrimitive(PrimitiveType.Capsule);
 
             npcObject.transform.position = new Vector3(
                 npc.position.x,
@@ -69,14 +107,21 @@ namespace WorldZero.NPC
             Renderer renderer =
                 npcObject.GetComponent<Renderer>();
 
-            Material material = new Material(
-                Shader.Find(
-                    "Universal Render Pipeline/Lit"
-                )
+            Shader shader = Shader.Find(
+                "Universal Render Pipeline/Lit"
             );
 
-            material.color = npcColor;
-            renderer.material = material;
+            if (shader == null)
+            {
+                shader = Shader.Find("Standard");
+            }
+
+            if (shader != null && renderer != null)
+            {
+                Material material = new Material(shader);
+                material.color = npcColor;
+                renderer.material = material;
+            }
 
             NpcVisual visual =
                 npcObject.AddComponent<NpcVisual>();
@@ -87,6 +132,8 @@ namespace WorldZero.NPC
                 npc.firstName,
                 npc.occupation
             );
+
+            spawnedNpcs.Add(npc.id, npcObject);
 
             CreateNameLabel(
                 npcObject.transform,
@@ -109,19 +156,15 @@ namespace WorldZero.NPC
             string occupation
         )
         {
-            GameObject label =
-                new GameObject("NPC Label");
+            GameObject label = new GameObject("NPC Label");
 
-            label.transform.SetParent(parent);
+            label.transform.SetParent(parent, false);
             label.transform.localPosition =
                 new Vector3(0f, 1.5f, 0f);
 
-            TextMesh text =
-                label.AddComponent<TextMesh>();
+            TextMesh text = label.AddComponent<TextMesh>();
 
-            text.text =
-                $"{displayName}\n{occupation}";
-
+            text.text = $"{displayName}\n{occupation}";
             text.anchor = TextAnchor.MiddleCenter;
             text.alignment = TextAlignment.Center;
             text.characterSize = 0.12f;

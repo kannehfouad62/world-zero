@@ -212,4 +212,26 @@ describe('Maya persistent interaction integration', () => {
       expect(state.relationship.resentment).toBe(12);
     }
   });
+
+  it('rolls back a decision if the relationship update fails', async () => {
+    const playerId = await createTestPlayer();
+
+    // Simulate an absent relationship record.
+    await database.db
+      .delete(npcPlayerRelationships)
+      .where(eq(npcPlayerRelationships.playerId, playerId));
+
+    await expect(
+      service.recordMayaHelpDecision(playerId, {
+        decision: 'HELP',
+      }),
+    ).rejects.toMatchObject({ status: 404 });
+
+    const state = await getState(playerId);
+
+    // No partial decision or memory may survive.
+    expect(state.decisions).toHaveLength(0);
+    expect(state.memories).toHaveLength(0);
+    expect(state.relationship).toBeUndefined();
+  });
 });

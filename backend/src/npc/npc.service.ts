@@ -29,6 +29,7 @@ import type {
   MayaInteractionResponse,
   NpcRelationshipResponse,
   NpcResponse,
+  MayaDecisionStatusResponse,
 } from './npc.types.js';
 
 @Injectable()
@@ -385,6 +386,47 @@ export class NpcService {
         importance: result.memory.importance,
         occurredAt: result.memory.occurredAt.toISOString(),
       },
+    };
+  }
+
+  async getMayaDecisionStatus(
+    playerId: string,
+  ): Promise<MayaDecisionStatusResponse> {
+    const [event] = await this.database.db
+      .select({
+        id: worldEvents.id,
+        slug: worldEvents.slug,
+        status: worldEvents.status,
+      })
+      .from(worldEvents)
+      .where(eq(worldEvents.slug, MAYA_STOLEN_SUPPLIES_EVENT_SLUG))
+      .limit(1);
+
+    if (!event) {
+      throw new NotFoundException('Maya event was not found');
+    }
+
+    const [recorded] = await this.database.db
+      .select({
+        decision: playerEventDecisions.decision,
+        createdAt: playerEventDecisions.createdAt,
+      })
+      .from(playerEventDecisions)
+      .where(
+        and(
+          eq(playerEventDecisions.eventId, event.id),
+          eq(playerEventDecisions.playerId, playerId),
+        ),
+      )
+      .limit(1);
+
+    return {
+      eventId: event.id,
+      eventSlug: event.slug,
+      eventStatus: event.status,
+      hasDecided: Boolean(recorded),
+      decision: recorded?.decision ?? null,
+      decidedAt: recorded?.createdAt.toISOString() ?? null,
     };
   }
 }

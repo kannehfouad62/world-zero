@@ -2,6 +2,10 @@ using System;
 
 namespace WorldZero.Networking
 {
+    // =========================================================
+    // WORLD STATUS
+    // =========================================================
+
     [Serializable]
     public sealed class WorldStatusResponse
     {
@@ -13,10 +17,11 @@ namespace WorldZero.Networking
         public string worldTime;
         public long worldTick;
     }
-}
 
-namespace WorldZero.Networking
-{
+    // =========================================================
+    // AUTHENTICATION
+    // =========================================================
+
     [Serializable]
     public sealed class LoginRequest
     {
@@ -40,6 +45,10 @@ namespace WorldZero.Networking
         public int accessTokenExpiresInSeconds;
         public AuthPlayerSummary player;
     }
+
+    // =========================================================
+    // PLAYER IDENTITY AND WORLD PRESENCE
+    // =========================================================
 
     [Serializable]
     public sealed class PlayerPositionResponse
@@ -72,10 +81,7 @@ namespace WorldZero.Networking
         public string lastSeenAt;
         public PlayerPresenceResponse presence;
     }
-}
 
-namespace WorldZero.Networking
-{
     [Serializable]
     public sealed class UpdatePlayerPositionRequest
     {
@@ -83,10 +89,11 @@ namespace WorldZero.Networking
         public float rotationY;
         public int expectedVersion;
     }
-}
 
-namespace WorldZero.Networking
-{
+    // =========================================================
+    // NPC IDENTITY AND LOCATION
+    // =========================================================
+
     [Serializable]
     public sealed class NpcLocationResponse
     {
@@ -125,15 +132,10 @@ namespace WorldZero.Networking
     {
         public NpcResponse[] items;
     }
-}
 
-namespace WorldZero.Networking
-{
-    [Serializable]
-    public sealed class MayaHelpDecisionRequest
-    {
-        public string decision;
-    }
+    // =========================================================
+    // NPC RELATIONSHIPS AND MEMORIES
+    // =========================================================
 
     [Serializable]
     public sealed class NpcRelationshipResponse
@@ -157,6 +159,16 @@ namespace WorldZero.Networking
         public string occurredAt;
     }
 
+    // =========================================================
+    // MAYA INTERACTION
+    // =========================================================
+
+    [Serializable]
+    public sealed class MayaHelpDecisionRequest
+    {
+        public string decision;
+    }
+
     [Serializable]
     public sealed class MayaInteractionNpcResponse
     {
@@ -172,5 +184,20 @@ namespace WorldZero.Networking
         public string message;
         public NpcRelationshipResponse relationship;
         public NpcMemoryResponse memory;
+    }
+
+    // =========================================================
+    // PERSISTENT EVENT DECISION STATUS
+    // =========================================================
+
+    [Serializable]
+    public sealed class MayaDecisionStatusResponse
+    {
+        public string eventId;
+        public string eventSlug;
+        public string eventStatus;
+        public bool hasDecided;
+        public string decision;
+        public string decidedAt;
     }
 }

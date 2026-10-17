@@ -14,6 +14,7 @@ import type {
   MayaHelpDecisionInput,
   MayaInteractionResponse,
   NpcResponse,
+  MayaDecisionStatusResponse,
 } from './npc.types.js';
 
 @Controller('api/v1/npcs')
@@ -45,5 +46,19 @@ export class NpcController {
   @Get(':npcId')
   async getNpc(@Param('npcId') npcId: string): Promise<NpcResponse> {
     return this.npcService.getNpc(npcId);
+  }
+
+  @Get('maya/decision-status')
+  @UseGuards(AuthGuard)
+  async getMayaDecisionStatus(
+    @Req() request: AuthenticatedRequest,
+  ): Promise<MayaDecisionStatusResponse> {
+    const playerId = request.auth?.playerId;
+
+    if (!playerId) {
+      throw new UnauthorizedException('Authenticated player was not found');
+    }
+
+    return this.npcService.getMayaDecisionStatus(playerId);
   }
 }
