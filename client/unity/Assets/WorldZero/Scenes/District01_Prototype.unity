@@ -1873,6 +1873,9 @@ GameObject:
   - component: {fileID: 771269464}
   - component: {fileID: 771269463}
   - component: {fileID: 771269462}
+  - component: {fileID: 771269466}
+  - component: {fileID: 771269465}
+  - component: {fileID: 771269467}
   m_Layer: 0
   m_Name: WORLD ZERO Systems
   m_TagString: Untagged
@@ -1995,6 +1998,8 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.NPC.NpcWorldSpawner
   npcApiClient: {fileID: 0}
+  districtSlug: district-01
+  retryIntervalSeconds: 5
 --- !u!114 &771269464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,6 +2012,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c695dd0a7e749e5bec3b8ec0105762, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.NpcApiClient
+--- !u!114 &771269465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4511c352708543babf268144f5a69ae, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.UI.ObjectiveTrackerUI
+  objectiveApiClient: {fileID: 0}
+  refreshIntervalSeconds: 15
+--- !u!114 &771269466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f3a0bf008ac4cb1be228990ae3ac5e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.ObjectiveApiClient
+--- !u!114 &771269467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3b029b30eed4105916f67a89af825f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Investigation.DeliveryReceiptInteraction
+  player: {fileID: 0}
+  cluePosition: {x: -27, y: 0, z: 14}
 --- !u!21 &773503940
 Material:
   serializedVersion: 8

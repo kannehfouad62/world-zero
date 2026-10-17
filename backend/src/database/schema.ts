@@ -565,3 +565,63 @@ export const playerEventProgress = pgTable(
     ),
   ],
 );
+
+export const eventClues = pgTable('event_clues', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  eventId: uuid('event_id')
+    .notNull()
+    .references(() => worldEvents.id, { onDelete: 'restrict' }),
+
+  slug: text('slug').notNull().unique(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+
+  districtId: uuid('district_id')
+    .notNull()
+    .references(() => districts.id, { onDelete: 'restrict' }),
+
+  positionX: text('position_x').notNull(),
+  positionY: text('position_y').notNull(),
+  positionZ: text('position_z').notNull(),
+
+  requiredStep: integer('required_step').notNull().default(0),
+  isActive: boolean('is_active').notNull().default(true),
+
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const playerClueDiscoveries = pgTable(
+  'player_clue_discoveries',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    clueId: uuid('clue_id')
+      .notNull()
+      .references(() => eventClues.id, { onDelete: 'restrict' }),
+
+    eventId: uuid('event_id')
+      .notNull()
+      .references(() => worldEvents.id, { onDelete: 'restrict' }),
+
+    playerId: uuid('player_id')
+      .notNull()
+      .references(() => players.id, { onDelete: 'restrict' }),
+
+    discoveredAt: timestamp('discovered_at', {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('player_clue_discoveries_player_clue_unique').on(
+      table.playerId,
+      table.clueId,
+    ),
+  ],
+);

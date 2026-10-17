@@ -16,3 +16,22 @@ export interface PlayerObjectiveResponse {
 export interface PlayerObjectivesResponse {
   objectives: PlayerObjectiveResponse[];
 }
+
+export interface ClueInspectionResponse {
+  clue: {
+    id: string;
+    slug: string;
+    title: string;
+    description: string;
+  };
+  discovery: {
+    id: string;
+    discoveredAt: string;
+  };
+  progress: {
+    status: 'ACTIVE';
+    previousStep: number;
+    currentStep: number;
+  };
+  message: string;
+}

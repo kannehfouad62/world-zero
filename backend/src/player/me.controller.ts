@@ -2,14 +2,19 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
+  Post,
   Req,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard, type AuthenticatedRequest } from '../auth/auth.guard.js';
 import { ObjectiveService } from './objective.service.js';
-import type { PlayerObjectivesResponse } from './objective.types.js';
+import type {
+  ClueInspectionResponse,
+  PlayerObjectivesResponse,
+} from './objective.types.js';
 import { PlayerService } from './player.service.js';
 import type {
   PlayerResponse,
@@ -46,6 +51,20 @@ export class MeController {
     }
 
     return this.objectiveService.getActiveObjectives(playerId);
+  }
+
+  @Post('clues/:clueSlug/inspect')
+  async inspectClue(
+    @Req() request: AuthenticatedRequest,
+    @Param('clueSlug') clueSlug: string,
+  ): Promise<ClueInspectionResponse> {
+    const playerId = request.auth?.playerId;
+
+    if (!playerId) {
+      throw new UnauthorizedException('Authenticated player was not found');
+    }
+
+    return this.objectiveService.inspectClue(playerId, clueSlug);
   }
 
   @Patch('position')
