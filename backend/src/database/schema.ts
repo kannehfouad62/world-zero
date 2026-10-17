@@ -515,3 +515,53 @@ export const playerEventDecisions = pgTable(
     ),
   ],
 );
+
+export const playerEventProgressStatusEnum = pgEnum(
+  'player_event_progress_status',
+  ['ACTIVE', 'COMPLETED', 'FAILED', 'CANCELLED'],
+);
+
+export const playerEventProgress = pgTable(
+  'player_event_progress',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    eventId: uuid('event_id')
+      .notNull()
+      .references(() => worldEvents.id, {
+        onDelete: 'restrict',
+      }),
+
+    playerId: uuid('player_id')
+      .notNull()
+      .references(() => players.id, {
+        onDelete: 'restrict',
+      }),
+
+    status: playerEventProgressStatusEnum('status').notNull().default('ACTIVE'),
+
+    currentStep: integer('current_step').notNull().default(0),
+
+    startedAt: timestamp('started_at', {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+
+    completedAt: timestamp('completed_at', {
+      withTimezone: true,
+    }),
+
+    updatedAt: timestamp('updated_at', {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('player_event_progress_event_player_unique').on(
+      table.eventId,
+      table.playerId,
+    ),
+  ],
+);

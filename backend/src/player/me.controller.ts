@@ -8,6 +8,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard, type AuthenticatedRequest } from '../auth/auth.guard.js';
+import { ObjectiveService } from './objective.service.js';
+import type { PlayerObjectivesResponse } from './objective.types.js';
 import { PlayerService } from './player.service.js';
 import type {
   PlayerResponse,
@@ -17,7 +19,10 @@ import type {
 @Controller('api/v1/me')
 @UseGuards(AuthGuard)
 export class MeController {
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(
+    private readonly playerService: PlayerService,
+    private readonly objectiveService: ObjectiveService,
+  ) {}
 
   @Get()
   async getMe(@Req() request: AuthenticatedRequest): Promise<PlayerResponse> {
@@ -28,6 +33,19 @@ export class MeController {
     }
 
     return this.playerService.getPlayer(playerId);
+  }
+
+  @Get('objectives')
+  async getObjectives(
+    @Req() request: AuthenticatedRequest,
+  ): Promise<PlayerObjectivesResponse> {
+    const playerId = request.auth?.playerId;
+
+    if (!playerId) {
+      throw new UnauthorizedException('Authenticated player was not found');
+    }
+
+    return this.objectiveService.getActiveObjectives(playerId);
   }
 
   @Patch('position')

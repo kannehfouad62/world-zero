@@ -43,6 +43,13 @@
       "when": 1792263774937,
       "tag": "0005_persistent_world_events",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792276671208,
+      "tag": "0006_player_event_progress",
+      "breakpoints": true
     }
   ]
 }

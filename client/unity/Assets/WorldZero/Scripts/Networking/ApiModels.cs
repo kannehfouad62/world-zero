@@ -201,3 +201,29 @@ namespace WorldZero.Networking
         public string decidedAt;
     }
 }
+
+namespace WorldZero.Networking
+{
+    [System.Serializable]
+    public sealed class PlayerObjectiveResponse
+    {
+        public string id;
+        public string eventId;
+        public string eventSlug;
+        public string title;
+        public string description;
+        public string status;
+        public int currentStep;
+        public int totalSteps;
+        public string currentObjective;
+        public string districtId;
+        public string startedAt;
+        public string completedAt;
+    }
+
+    [System.Serializable]
+    public sealed class PlayerObjectivesResponse
+    {
+        public PlayerObjectiveResponse[] objectives;
+    }
+}
