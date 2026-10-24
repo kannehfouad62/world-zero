@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ClueStatusController } from './clue-status.controller.js';
+import { MayaDeliveryController } from './maya-delivery.controller.js';
+import { MayaDeliveryStatusController } from './maya-delivery-status.controller.js';
+import { MayaDeliveryService } from './maya-delivery.service.js';
 import { MeController } from './me.controller.js';
 import { ObjectiveService } from './objective.service.js';
 import { PlayerController } from './player.controller.js';
@@ -18,18 +21,22 @@ import { SupplyStatusController } from './supply-status.controller.js';
     PlayerRecoveryController,
     SupplyRecoveryController,
     SupplyStatusController,
+    MayaDeliveryController,
+    MayaDeliveryStatusController,
   ],
   providers: [
     PlayerService,
     ObjectiveService,
     PlayerRecoveryService,
     SupplyRecoveryService,
+    MayaDeliveryService,
   ],
   exports: [
     PlayerService,
     ObjectiveService,
     PlayerRecoveryService,
     SupplyRecoveryService,
+    MayaDeliveryService,
   ],
 })
 export class PlayerModule {}
