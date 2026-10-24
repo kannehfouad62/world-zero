@@ -1,0 +1,1 @@
+ALTER TABLE "player_world_presences" ADD COLUMN "last_recovered_at" timestamp with time zone;

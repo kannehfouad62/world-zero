@@ -18,6 +18,7 @@ import type {
   UpdatePlayerPositionInput,
 } from './player.types.js';
 import {
+  isWithinDistrict01Bounds,
   MAX_MOVEMENT_DISTANCE_PER_UPDATE,
   WORLD_POSITION_LIMIT,
 } from './player.constants.js';
@@ -172,6 +173,12 @@ export class PlayerService {
     }
 
     const { x, y, z } = input.position;
+
+    if (!isWithinDistrict01Bounds({ x, y, z })) {
+      throw new BadRequestException(
+        'Position is outside District 01 playable boundaries',
+      );
+    }
 
     if (
       Math.abs(x) > WORLD_POSITION_LIMIT ||

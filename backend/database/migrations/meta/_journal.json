@@ -57,6 +57,13 @@
       "when": 1792278097814,
       "tag": "0007_event_clue_discovery",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792877055644,
+      "tag": "0008_player_recovery_tracking",
+      "breakpoints": true
     }
   ]
 }

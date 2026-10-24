@@ -166,6 +166,10 @@ export const playerWorldPresences = pgTable('player_world_presences', {
     .notNull()
     .default(1),
 
+  lastRecoveredAt: timestamp('last_recovered_at', {
+    withTimezone: true,
+  }),
+
   enteredAt: timestamp('entered_at', {
     withTimezone: true,
   })

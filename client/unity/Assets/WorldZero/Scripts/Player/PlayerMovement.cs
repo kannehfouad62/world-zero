@@ -22,11 +22,25 @@ namespace WorldZero.Player
             characterController = GetComponent<CharacterController>();
         }
 
+        public void ResetVerticalVelocity()
+        {
+            verticalVelocity = 0f;
+        }
+
+        private void OnDisable()
+        {
+            ResetVerticalVelocity();
+        }
+
         private void Update()
         {
             Vector2 input = ReadMovementInput();
 
-            Vector3 movement = new Vector3(input.x, 0f, input.y);
+            Vector3 movement = new Vector3(
+                input.x,
+                0f,
+                input.y
+            );
 
             if (movement.sqrMagnitude > 1f)
             {
@@ -36,7 +50,10 @@ namespace WorldZero.Player
             if (movement.sqrMagnitude > 0.001f)
             {
                 Quaternion targetRotation =
-                    Quaternion.LookRotation(movement, Vector3.up);
+                    Quaternion.LookRotation(
+                        movement,
+                        Vector3.up
+                    );
 
                 transform.rotation = Quaternion.Slerp(
                     transform.rotation,
@@ -45,7 +62,10 @@ namespace WorldZero.Player
                 );
             }
 
-            if (characterController.isGrounded && verticalVelocity < 0f)
+            if (
+                characterController.isGrounded &&
+                verticalVelocity < 0f
+            )
             {
                 verticalVelocity = -2f;
             }
@@ -55,7 +75,9 @@ namespace WorldZero.Player
             movement *= movementSpeed;
             movement.y = verticalVelocity;
 
-            characterController.Move(movement * Time.deltaTime);
+            characterController.Move(
+                movement * Time.deltaTime
+            );
         }
 
         private static Vector2 ReadMovementInput()
@@ -63,22 +85,34 @@ namespace WorldZero.Player
             float horizontal = 0f;
             float vertical = 0f;
 
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            if (
+                Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.LeftArrow)
+            )
             {
                 horizontal -= 1f;
             }
 
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            if (
+                Input.GetKey(KeyCode.D) ||
+                Input.GetKey(KeyCode.RightArrow)
+            )
             {
                 horizontal += 1f;
             }
 
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            if (
+                Input.GetKey(KeyCode.S) ||
+                Input.GetKey(KeyCode.DownArrow)
+            )
             {
                 vertical -= 1f;
             }
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (
+                Input.GetKey(KeyCode.W) ||
+                Input.GetKey(KeyCode.UpArrow)
+            )
             {
                 vertical += 1f;
             }
