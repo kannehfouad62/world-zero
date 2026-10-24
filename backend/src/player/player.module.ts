@@ -6,6 +6,9 @@ import { PlayerController } from './player.controller.js';
 import { PlayerRecoveryController } from './player-recovery.controller.js';
 import { PlayerRecoveryService } from './player-recovery.service.js';
 import { PlayerService } from './player.service.js';
+import { SupplyRecoveryController } from './supply-recovery.controller.js';
+import { SupplyRecoveryService } from './supply-recovery.service.js';
+import { SupplyStatusController } from './supply-status.controller.js';
 
 @Module({
   controllers: [
@@ -13,8 +16,20 @@ import { PlayerService } from './player.service.js';
     MeController,
     ClueStatusController,
     PlayerRecoveryController,
+    SupplyRecoveryController,
+    SupplyStatusController,
   ],
-  providers: [PlayerService, ObjectiveService, PlayerRecoveryService],
-  exports: [PlayerService, ObjectiveService, PlayerRecoveryService],
+  providers: [
+    PlayerService,
+    ObjectiveService,
+    PlayerRecoveryService,
+    SupplyRecoveryService,
+  ],
+  exports: [
+    PlayerService,
+    ObjectiveService,
+    PlayerRecoveryService,
+    SupplyRecoveryService,
+  ],
 })
 export class PlayerModule {}

@@ -64,6 +64,13 @@
       "when": 1792877055644,
       "tag": "0008_player_recovery_tracking",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792879580774,
+      "tag": "0009_persistent_event_supplies",
+      "breakpoints": true
     }
   ]
 }

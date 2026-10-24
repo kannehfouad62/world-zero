@@ -629,3 +629,76 @@ export const playerClueDiscoveries = pgTable(
     ),
   ],
 );
+
+export const eventRecoverableItems = pgTable('event_recoverable_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  eventId: uuid('event_id')
+    .notNull()
+    .references(() => worldEvents.id, {
+      onDelete: 'restrict',
+    }),
+
+  districtId: uuid('district_id')
+    .notNull()
+    .references(() => districts.id, {
+      onDelete: 'restrict',
+    }),
+
+  slug: text('slug').notNull().unique(),
+
+  name: text('name').notNull(),
+
+  description: text('description').notNull(),
+
+  positionX: text('position_x').notNull(),
+  positionY: text('position_y').notNull(),
+  positionZ: text('position_z').notNull(),
+
+  requiredStep: integer('required_step').notNull().default(2),
+
+  isActive: boolean('is_active').notNull().default(true),
+
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const playerRecoveredItems = pgTable(
+  'player_recovered_items',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    itemId: uuid('item_id')
+      .notNull()
+      .references(() => eventRecoverableItems.id, {
+        onDelete: 'restrict',
+      }),
+
+    eventId: uuid('event_id')
+      .notNull()
+      .references(() => worldEvents.id, {
+        onDelete: 'restrict',
+      }),
+
+    playerId: uuid('player_id')
+      .notNull()
+      .references(() => players.id, {
+        onDelete: 'restrict',
+      }),
+
+    recoveredAt: timestamp('recovered_at', {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('player_recovered_items_player_item_unique').on(
+      table.playerId,
+      table.itemId,
+    ),
+  ],
+);
