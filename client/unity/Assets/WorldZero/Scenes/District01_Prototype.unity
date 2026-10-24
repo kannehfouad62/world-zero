@@ -1876,6 +1876,7 @@ GameObject:
   - component: {fileID: 771269466}
   - component: {fileID: 771269465}
   - component: {fileID: 771269467}
+  - component: {fileID: 771269468}
   m_Layer: 0
   m_Name: WORLD ZERO Systems
   m_TagString: Untagged
@@ -2050,8 +2051,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3b029b30eed4105916f67a89af825f, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Investigation.DeliveryReceiptInteraction
+  clueSlug: maya-delivery-receipt
+  clueTitle: Missing Delivery Receipt
+  expectedNextStep: 1
   player: {fileID: 0}
   cluePosition: {x: -27, y: 0, z: 14}
+  enableDebugLogging: 1
+--- !u!114 &771269468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3b029b30eed4105916f67a89af825f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Investigation.DeliveryReceiptInteraction
+  clueSlug: maya-warehouse-shipping-record
+  clueTitle: Warehouse Shipping Record
+  expectedNextStep: 2
+  player: {fileID: 0}
+  cluePosition: {x: 50, y: 0, z: 29}
+  enableDebugLogging: 1
 --- !u!21 &773503940
 Material:
   serializedVersion: 8

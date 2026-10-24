@@ -8,7 +8,15 @@ namespace WorldZero.Investigation
 {
     public sealed class DeliveryReceiptInteraction : MonoBehaviour
     {
-        private const string ClueSlug = "maya-delivery-receipt";
+        [Header("Evidence Configuration")]
+        [SerializeField]
+        private string clueSlug = "maya-delivery-receipt";
+
+        [SerializeField]
+        private string clueTitle = "Missing Delivery Receipt";
+
+        [SerializeField]
+        private int expectedNextStep = 1;
         private const float InteractionDistance = 3f;
         private const float StatusRetryDelay = 5f;
 
@@ -97,7 +105,7 @@ namespace WorldZero.Investigation
             );
 
             clueObject.name =
-                "Evidence - Missing Delivery Receipt";
+                "Evidence - " + clueTitle;
 
             clueObject.transform.position =
                 cluePosition + Vector3.up * 0.15f;
@@ -147,7 +155,7 @@ namespace WorldZero.Investigation
 
             TextMesh text = label.AddComponent<TextMesh>();
 
-            text.text = "Delivery Receipt";
+            text.text = clueTitle;
             text.anchor = TextAnchor.MiddleCenter;
             text.alignment = TextAlignment.Center;
             text.characterSize = 0.12f;
@@ -242,7 +250,7 @@ namespace WorldZero.Investigation
             string accessToken = session.AccessToken;
 
             string url =
-                $"{ApiConfig.BaseUrl}/me/clues/{ClueSlug}/status";
+                $"{ApiConfig.BaseUrl}/me/clues/{clueSlug}/status";
 
             using UnityWebRequest request =
                 UnityWebRequest.Get(url);
@@ -335,12 +343,12 @@ namespace WorldZero.Investigation
 
             if (discovered)
             {
-                message = "Delivery receipt already discovered.";
+                message = clueTitle + " already discovered.";
 
                 if (enableDebugLogging)
                 {
                     Debug.Log(
-                        "WORLD ZERO: Receipt discovery confirmed. " +
+                        "WORLD ZERO: Evidence discovery confirmed. " +
                         $"Investigation step: {currentStep}"
                     );
                 }
@@ -484,7 +492,7 @@ namespace WorldZero.Investigation
             }
 
             inspecting = true;
-            message = "Inspecting delivery receipt...";
+            message = "Inspecting " + clueTitle + "...";
 
             activeRequest = StartCoroutine(
                 InspectReceipt(currentPlayerId)
@@ -511,7 +519,7 @@ namespace WorldZero.Investigation
             string accessToken = session.AccessToken;
 
             string url =
-                $"{ApiConfig.BaseUrl}/me/clues/{ClueSlug}/inspect";
+                $"{ApiConfig.BaseUrl}/me/clues/{clueSlug}/inspect";
 
             using UnityWebRequest request =
                 new UnityWebRequest(url, "POST");
@@ -568,16 +576,16 @@ namespace WorldZero.Investigation
                 if (
                     response != null &&
                     response.progress != null &&
-                    response.progress.currentStep == 1
+                    response.progress.currentStep == expectedNextStep
                 )
                 {
                     discovered = true;
                     statusKnown = true;
                     canInspect = false;
-                    currentStep = 1;
+                    currentStep = expectedNextStep;
                     outcomeUncertain = false;
 
-                    message = "Delivery receipt discovered!";
+                    message = clueTitle + " discovered!";
 
                     if (clueObject != null)
                     {
@@ -585,8 +593,8 @@ namespace WorldZero.Investigation
                     }
 
                     Debug.Log(
-                        "WORLD ZERO: Delivery receipt discovered. " +
-                        "Investigation advanced to step 1."
+                        "WORLD ZERO: Evidence discovered. " +
+                        $"Investigation advanced to step {expectedNextStep}."
                     );
 
                     yield break;

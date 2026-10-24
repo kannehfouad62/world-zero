@@ -104,10 +104,6 @@ export class ObjectiveService {
     playerId: string,
     clueSlug: string,
   ): Promise<ClueInspectionResponse> {
-    if (clueSlug !== 'maya-delivery-receipt') {
-      throw new NotFoundException('Clue was not found');
-    }
-
     return this.database.db.transaction(async (tx) => {
       const [clue] = await tx
         .select({
