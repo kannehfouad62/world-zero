@@ -1877,6 +1877,8 @@ GameObject:
   - component: {fileID: 771269465}
   - component: {fileID: 771269467}
   - component: {fileID: 771269468}
+  - component: {fileID: 771269469}
+  - component: {fileID: 771269470}
   m_Layer: 0
   m_Name: WORLD ZERO Systems
   m_TagString: Untagged
@@ -1985,6 +1987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.UI.MayaInteractionUI
   player: {fileID: 0}
   npcApiClient: {fileID: 0}
+  deliveryApiClient: {fileID: 0}
   enableDebugLogging: 1
 --- !u!114 &771269463
 MonoBehaviour:
@@ -2075,6 +2078,32 @@ MonoBehaviour:
   player: {fileID: 0}
   cluePosition: {x: 50, y: 0, z: 29}
   enableDebugLogging: 1
+--- !u!114 &771269469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e55c6b219077446f9a947cd001654ef, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Investigation.SupplyCrateInteraction
+  player: {fileID: 0}
+  cratePosition: {x: 54, y: 0, z: 29}
+--- !u!114 &771269470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c60e0eb3dcc34a56aa43f8833ed060b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.MayaDeliveryApiClient
 --- !u!21 &773503940
 Material:
   serializedVersion: 8
@@ -2855,6 +2884,10 @@ MonoBehaviour:
   playerApiClient: {fileID: 771269461}
   synchronizationInterval: 2
   minimumMovementDistance: 0.25
+  horizontalBoundary: 65
+  minimumPlayerHeight: 0.25
+  maximumPlayerHeight: 11
+  recoveryRetryInterval: 5
 --- !u!21 &965961189
 Material:
   serializedVersion: 8
