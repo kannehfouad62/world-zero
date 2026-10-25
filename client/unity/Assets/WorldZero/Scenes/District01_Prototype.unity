@@ -1879,6 +1879,8 @@ GameObject:
   - component: {fileID: 771269468}
   - component: {fileID: 771269469}
   - component: {fileID: 771269470}
+  - component: {fileID: 771269472}
+  - component: {fileID: 771269471}
   m_Layer: 0
   m_Name: WORLD ZERO Systems
   m_TagString: Untagged
@@ -2104,6 +2106,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c60e0eb3dcc34a56aa43f8833ed060b, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Networking.MayaDeliveryApiClient
+--- !u!114 &771269471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b816ebe08a56c48318901220418b7bfb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Journal.MissionJournalUI
+  journalApiClient: {fileID: 0}
+  toggleKey: 24
+  showDebugLogs: 1
+--- !u!114 &771269472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771269454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0fd26d29b3e4e66955ca227ed04ea1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldZero.Journal.MissionJournalApiClient
 --- !u!21 &773503940
 Material:
   serializedVersion: 8
