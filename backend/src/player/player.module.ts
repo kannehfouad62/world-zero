@@ -1,3 +1,5 @@
+import { MissionJournalController } from './mission-journal.controller.js';
+import { MissionJournalService } from './mission-journal.service.js';
 import { Module } from '@nestjs/common';
 import { ClueStatusController } from './clue-status.controller.js';
 import { MayaDeliveryController } from './maya-delivery.controller.js';
@@ -23,6 +25,7 @@ import { SupplyStatusController } from './supply-status.controller.js';
     SupplyStatusController,
     MayaDeliveryController,
     MayaDeliveryStatusController,
+    MissionJournalController,
   ],
   providers: [
     PlayerService,
@@ -30,6 +33,7 @@ import { SupplyStatusController } from './supply-status.controller.js';
     PlayerRecoveryService,
     SupplyRecoveryService,
     MayaDeliveryService,
+    MissionJournalService,
   ],
   exports: [
     PlayerService,
@@ -37,6 +41,7 @@ import { SupplyStatusController } from './supply-status.controller.js';
     PlayerRecoveryService,
     SupplyRecoveryService,
     MayaDeliveryService,
+    MissionJournalService,
   ],
 })
 export class PlayerModule {}

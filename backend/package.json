@@ -23,7 +23,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/database/seed.ts",
-    "test:integration": "vitest run src/npc/npc.integration.spec.ts src/player/objective.integration.spec.ts src/player/warehouse.integration.spec.ts src/player/player-safety.integration.spec.ts src/player/player-recovery.integration.spec.ts src/player/supply-recovery.integration.spec.ts src/player/maya-delivery.integration.spec.ts"
+    "test:integration": "vitest run src/npc/npc.integration.spec.ts src/player/objective.integration.spec.ts src/player/warehouse.integration.spec.ts src/player/player-safety.integration.spec.ts src/player/player-recovery.integration.spec.ts src/player/supply-recovery.integration.spec.ts src/player/maya-delivery.integration.spec.ts src/player/mission-journal.integration.spec.ts"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
